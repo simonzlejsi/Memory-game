@@ -72,9 +72,25 @@ setClasses();
 
 const deck = document.querySelector('.deck');
 
-// const stars = document.getElementsByClassName('stars');
-// const moves = document.getElementsByClassName('moves');
-// let movesNmbr = moves.innerHTML();
+let moves = 0 ;
+
+function movesN() {
+	moves += 1
+	document.querySelector('.moves').innerHTML = moves ;
+
+	switch (moves) {
+		case 16:
+			document.querySelector('.stars').firstElementChild.remove();
+			break;
+		case 18: 
+			document.querySelector('.stars').firstElementChild.remove();
+			break;
+		case 20:
+			document.querySelector('.stars').firstElementChild.remove();
+			break;
+		default:
+	}
+}
 
 var theList = [];
 let counter = 0 ;
@@ -115,9 +131,8 @@ deck.addEventListener('click',function (event) {
 	
 	if (theCard.nodeName === 'LI') {
 		theCard.className = 'show card open';
-	}
 
-	// opening card 
+		// opening card 
 
 		theList.push(theCard.firstElementChild);
 		// console.log(theList);
@@ -129,7 +144,42 @@ deck.addEventListener('click',function (event) {
 		validation();
 		counter = 0;
 		theList = [];
-		// movesNmbr = movesNmbr + 1 ;
+		movesN();
+
 	}
+	}
+
 });
 
+function starReset() {
+	const stars = document.getElementsByClassName('fa-star');
+	const starsCon = document.querySelector('.stars');
+
+	const arStars = Array.from(stars);
+
+	for (let i = arStars.length; i < 3; i++) {
+		const starsContent = document.createElement('li');
+		starsContent.innerHTML = '<i class="fa fa-star"></i>';
+
+		starsCon.appendChild(starsContent);
+	}
+}
+
+const reset = document.querySelector('.restart');
+
+reset.addEventListener('click', function () {
+	getClasses();
+	shuffle(cardsList);
+	setClasses();
+	
+	counter= 0;
+	moves = 0 ;
+	document.querySelector('.moves').innerHTML = moves ;
+	theList = [];
+	for (let i = 0; i < 16; i++) {
+		cards[i].classList.remove('show','open','match');
+	}
+
+
+	starReset();
+});
