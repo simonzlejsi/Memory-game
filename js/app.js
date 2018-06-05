@@ -2,6 +2,23 @@
  * Create a list that holds all of your cards
  */
 
+const  cards = document.getElementsByClassName('card');
+
+var cardsList = [];
+
+function getClasses(){
+	for (let i = 0; i < 16; i++) {
+		let currentCard = cards[i].firstElementChild;
+		let classes = currentCard.className;
+		currentCard.setAttribute('class','');
+
+		// console.log(classes);
+		cardsList.push(classes);
+		// console.log(cardsList);
+	}
+}
+getClasses();
+
 
 /*
  * Display the cards on the page
@@ -25,6 +42,22 @@ function shuffle(array) {
     return array;
 }
 
+shuffle(cardsList);
+
+function setClasses() {
+	for (let i = 0; i < 16; i++) {
+		let currentCard = cards[i].firstElementChild;
+		currentCard.className = cardsList[i];
+		// currentCard.setAttribute('class','');
+
+		// console.log(classes);
+		// cardsList.push(classes);
+		// console.log(cardsList);
+	}
+}
+
+setClasses();
+
 
 /*
  * set up the event listener for a card. If a card is clicked:
@@ -36,3 +69,67 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
+const deck = document.querySelector('.deck');
+
+// const stars = document.getElementsByClassName('stars');
+// const moves = document.getElementsByClassName('moves');
+// let movesNmbr = moves.innerHTML();
+
+var theList = [];
+let counter = 0 ;
+
+function validation() {
+	if (theList[0].parentElement === theList[1].parentElement/*theList[0].className == theList[1].className*/) {
+		// theList[0].parentElement.classList.add('match');
+		// theList[1].parentElement.classList.add('match');
+		let firstE = theList[0];
+		let secondE = theList[1];
+
+		function ifFalse() {
+			firstE.parentElement.classList.remove('show','open');
+			secondE.parentElement.classList.remove('show','open');
+		}
+
+		 setTimeout(ifFalse, 1000);
+	} else if (theList[0].className == theList[1].className/*theList[0].parentElement === theList[1].parentElement*/){
+		theList[0].parentElement.classList.add('match');
+		theList[1].parentElement.classList.add('match');
+		}
+	else {
+		let firstE = theList[0];
+		let secondE = theList[1];
+
+		function ifFalse() {
+			firstE.parentElement.classList.remove('show','open');
+			secondE.parentElement.classList.remove('show','open');
+		}
+
+		 setTimeout(ifFalse, 1000);
+	}
+}
+
+deck.addEventListener('click',function (event) {
+	theCard = event.target;
+	// targeting card
+	
+	if (theCard.nodeName === 'LI') {
+		theCard.className = 'show card open';
+	}
+
+	// opening card 
+
+		theList.push(theCard.firstElementChild);
+		// console.log(theList);
+	// adding card to the list 
+	
+	counter = counter + 1 ;
+
+	if (counter == 2) {
+		validation();
+		counter = 0;
+		theList = [];
+		// movesNmbr = movesNmbr + 1 ;
+	}
+});
+
