@@ -114,7 +114,7 @@ function openModal() {
 	});
 
 	again.addEventListener('click',function () {
-		getClasses();
+		// getClasses();
 		shuffle(cardsList);
 		setClasses();
 
@@ -126,7 +126,15 @@ function openModal() {
 			cards[i].classList.remove('show','open','match');
 		}
 
-		deck.addEventListener('click', timerF);
+
+		for (let i = 0; i < 16; i++) {
+			cards[i].addEventListener('click', timerF);
+			cards[i].addEventListener('click', listener);
+		}
+
+		win = 0 ;
+
+		// deck.addEventListener('click', timerF);
 		starReset();
 
 		popUp.style.display = 'none';
@@ -142,6 +150,42 @@ let win = 0 ;
 
 // MATCH VALIDATION FUNCTION
 
+// function validation() {
+// 	if (theList[0].parentElement === theList[1].parentElement) {
+// 		let firstE = theList[0];
+// 		let secondE = theList[1];
+
+// 		function ifFalse() {
+// 			firstE.parentElement.classList.remove('show','open');
+// 			secondE.parentElement.classList.remove('show','open');
+// 		}
+
+// 		 setTimeout(ifFalse, 1000);
+// 	} else if (theList[0].className == theList[1].className){
+// 		theList[0].parentElement.classList.add('match');
+// 		theList[1].parentElement.classList.add('match');
+// 		win += 2 ;
+// 		// WINNING THE GAME 
+// 			if (win == 16) {
+// 				openModal();
+// 			}
+
+
+// 		}
+// 	else {
+// 		let firstE = theList[0];
+// 		let secondE = theList[1];
+
+// 		function ifFalse() {
+// 			firstE.parentElement.classList.remove('show','open');
+// 			secondE.parentElement.classList.remove('show','open');
+// 		}
+
+// 		 setTimeout(ifFalse, 1000);
+// 	}
+
+// }
+
 function validation() {
 	if (theList[0].parentElement === theList[1].parentElement) {
 		let firstE = theList[0];
@@ -153,6 +197,7 @@ function validation() {
 		}
 
 		 setTimeout(ifFalse, 1000);
+		 firsE.parentElement.addEventListener('click', listener);
 	} else if (theList[0].className == theList[1].className){
 		theList[0].parentElement.classList.add('match');
 		theList[1].parentElement.classList.add('match');
@@ -174,22 +219,49 @@ function validation() {
 		}
 
 		 setTimeout(ifFalse, 1000);
+		 firstE.parentElement.addEventListener('click', listener);
+		 secondE.parentElement.addEventListener('click', listener);
 	}
 
 }
 
 // EVENT LISTENER ON CLICK
 
-function listener(event) {
-	theCard = event.target;
-	// targeting card
+// function listener(event) {
+// 	theCard = event.target;
+// 	// targeting card
 	
-	if (theCard.nodeName === 'LI') {
-		theCard.className = 'show card open';
+// 	if (theCard.nodeName === 'LI') {
+// 		theCard.className = 'show card open';
+
+// 		// opening card 
+
+// 		theList.push(theCard.firstElementChild);
+// 		// console.log(theList);
+// 	// adding card to the list 
+	
+// 	counter = counter + 1 ;
+
+// 	if (counter == 2) {
+// 		validation();
+// 		counter = 0;
+// 		theList = [];
+// 		movesN();
+
+// 	}
+
+// 	}
+// }
+
+function listener(event) {
+	
+		this.className = 'show card open';
+
+		this.removeEventListener('click', listener);
 
 		// opening card 
 
-		theList.push(theCard.firstElementChild);
+		theList.push(this.firstElementChild);
 		// console.log(theList);
 	// adding card to the list 
 	
@@ -203,16 +275,31 @@ function listener(event) {
 
 	}
 
-	}
 }
+
+// function timerF() {
+// 	myTimer.measureStart('label1');
+// 	deck.removeEventListener('click', timerF);
+// }
 
 function timerF() {
 	myTimer.measureStart('label1');
-	deck.removeEventListener('click', timerF);
+	for (let i = 0; i < 16; i++) {
+		cards[i].removeEventListener('click', timerF);
+	}
 }
 
-deck.addEventListener('click', listener);
-deck.addEventListener('click', timerF);
+function addListeners(){
+	for (let i = 0; i < 16; i++) {
+		cards[i].addEventListener('click', listener);
+		cards[i].addEventListener('click', timerF);
+	}
+}
+
+addListeners();
+
+// deck.addEventListener('click', listener);
+// deck.addEventListener('click', timerF);
 
 // EVENT LISTENER ON CLICK
 // RESET BUTTON FUNCTIONS
@@ -231,10 +318,8 @@ function starReset() {
 	}
 }
 
-const reset = document.querySelector('.restart');
-
-reset.addEventListener('click', function () {
-	getClasses();
+document.querySelector('.fa-repeat').parentElement.addEventListener('click', function () {
+	// getClasses();
 	shuffle(cardsList);
 	setClasses();
 
@@ -246,7 +331,14 @@ reset.addEventListener('click', function () {
 		cards[i].classList.remove('show','open','match');
 	}
 
-	deck.addEventListener('click', timerF);
+	for (let i = 0; i < 16; i++) {
+		cards[i].addEventListener('click', timerF);
+		cards[i].addEventListener('click', listener);
+	}
+
+	win = 0 ;
+
+	// deck.addEventListener('click', timerF);
 	starReset();
 });
 
