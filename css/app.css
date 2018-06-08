@@ -37,6 +37,17 @@ h1 {
  * Styles for the deck of cards
  */
 
+#timer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: fixed;
+    font-size: 50px;
+    width: 200px;
+    height: 70px;
+    z-index: 100;
+}
+
 .deck {
     width: 660px;
     min-height: 680px;
